@@ -42,7 +42,7 @@ Your solution will be scored primarily on how closely it matches the reference. 
 
 Replace the placeholder below with your live deployed app URL.
 
-[Live Demo - Replace with your deployed URL](https://eclectic-seahorse-33b00e.netlify.app)
+[Live Demo](https://eclectic-seahorse-33b00e.netlify.app)
 
 ### Screen Recordings
 Replace each placeholder below with your submitted recording link.  
