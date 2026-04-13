@@ -1,3 +1,4 @@
+// Manages the state of streaming messages in a chat application, allowing for real-time updates as new chunks of text are received. It handles the lifecycle of a stream, including starting, updating with new chunks, completing, and error handling. The manager interacts with a ChatController to update messages in the chat interface.
 import 'package:flutter/foundation.dart';
 import 'package:flutter_chat_core/flutter_chat_core.dart';
 import 'package:flyer_chat_text_stream_message/flyer_chat_text_stream_message.dart';

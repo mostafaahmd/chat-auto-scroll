@@ -13,6 +13,7 @@ class ChatScrollChallenge extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Chat Scroll Challenge',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.from(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.green,
@@ -48,50 +49,63 @@ class _ApiKeyScreenState extends State<ApiKeyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final width = MediaQuery.sizeOf(context).width;
+    final horizontalPadding = width < 600 ? 16.0 : 24.0;
+
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Chat Auto-Scroll Challenge',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Enter your Gemini API key to start.\n'
-                'Get a free key at ai.google.dev',
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: 350,
-                child: TextField(
-                  controller: _apiKeyController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Gemini API Key',
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(horizontalPadding),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 440),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'Chat Auto-Scroll Challenge',
+                        style: theme.textTheme.headlineSmall,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        'Enter your Gemini API key to start.\nGet a free key at ai.google.dev',
+                        style: theme.textTheme.bodyMedium,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 24),
+                      TextField(
+                        controller: _apiKeyController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Gemini API Key',
+                        ),
+                        obscureText: true,
+                      ),
+                      const SizedBox(height: 16),
+                      FilledButton(
+                        onPressed: () {
+                          if (_apiKeyController.text.trim().isEmpty) return;
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => GeminiChatScreen(
+                                geminiApiKey: _apiKeyController.text.trim(),
+                              ),
+                            ),
+                          );
+                        },
+                        child: const Text('Start Chat'),
+                      ),
+                    ],
                   ),
-                  obscureText: true,
                 ),
               ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  if (_apiKeyController.text.trim().isEmpty) return;
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => GeminiChatScreen(
-                        geminiApiKey: _apiKeyController.text.trim(),
-                      ),
-                    ),
-                  );
-                },
-                child: const Text('Start Chat'),
-              ),
-            ],
+            ),
           ),
         ),
       ),
